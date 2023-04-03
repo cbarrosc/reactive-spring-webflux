@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
-import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
@@ -96,10 +95,7 @@ class MovieInfoRepositoryIntgTest {
 
         //then
         StepVerifier.create(movieInfoMono)
-                .assertNext(movieInfo1 ->
-                {
-                    assertEquals(2021, movieInfo1.getYear());
-                })
+                .assertNext(movieInfo1 -> assertEquals(2021, movieInfo1.getYear()))
                 .verifyComplete();
     }
 
@@ -112,6 +108,17 @@ class MovieInfoRepositoryIntgTest {
         //then
         StepVerifier.create(moviesInfoFlux)
                 .expectNextCount(2)
+                .verifyComplete();
+    }
+
+    @Test
+    void findByYear() {
+        //when
+        var moviesInfoFlux = movieInfoRepository.findByYear(2005).log();
+
+        //then
+        StepVerifier.create(moviesInfoFlux)
+                .expectNextCount(1)
                 .verifyComplete();
     }
 }
