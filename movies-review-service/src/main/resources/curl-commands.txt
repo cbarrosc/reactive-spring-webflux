@@ -1,0 +1,52 @@
+POST-REVIEW:
+------------
+http POST http://localhost:8081/v1/reviews \
+    reviewId:=1 \
+    movieInfoId:=1 \
+    comment="Excellent Movie" \
+    rating:=8.0 \
+    Content-Type:application/json
+
+http POST http://localhost:8081/v1/reviews \
+    reviewId:=2 \
+    movieInfoId:=2 \
+    comment="Excellent Movie" \
+    rating:=8.0 \
+    Content-Type:application/json
+
+
+http POST http://localhost:8081/v1/reviews \
+    reviewId:=null \
+    movieInfoId:=1 \
+    comment="Awesome Movie" \
+    rating:=9.0 \
+    Content-Type:application/json
+
+
+
+GET-ALL-REVIEWS:
+----------------
+http GET http://localhost:8081/v1/reviews
+
+
+GET-ALL-REVIEWS-BY-MOVIE-INFO-ID:
+--------------------------------
+http GET http://localhost:8081/v1/reviews movieInfoId==1
+
+http GET http://localhost:8081/v1/reviews movieInfoId==2
+
+
+UPDATE-REVIEW:
+----------------
+http PUT http://localhost:8081/v1/reviews/1 \
+    reviewId:=1 \
+    movieInfoId:=1 \
+    comment="Excellent Movie Update" \
+    rating:=8.5 \
+    Content-Type:application/json
+
+
+
+DELETE-MOVIE-INFO
+-----------------------
+http DELETE http://localhost:8081/v1/reviews/1
