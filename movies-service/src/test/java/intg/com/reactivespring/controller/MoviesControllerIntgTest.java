@@ -87,6 +87,8 @@ public class MoviesControllerIntgTest {
                 .is4xxClientError()
                 .expectBody(String.class)
                 .isEqualTo("There is no info Available for the movieId : abc");
+
+        verify(1, getRequestedFor(urlEqualTo("/v1/movie-info"+"/"+movieId)));
     }
 
     @Test
@@ -138,5 +140,35 @@ public class MoviesControllerIntgTest {
                 .is5xxServerError()
                 .expectBody(String.class)
                 .isEqualTo("Server Exception while calling movies-info-service : Movie Info Service is Down");
+
+        verify(4, getRequestedFor(urlEqualTo("/v1/movie-info"+"/"+movieId)));
+    }
+
+    @Test
+    void retrieveMovieById_reviews_5XX() {
+        //given
+        var movieId = "abc";
+        stubFor(get(urlEqualTo("/v1/movie-info"+"/"+movieId))
+                .willReturn(
+                        aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBodyFile("movieInfo.json")));
+
+        stubFor(get(urlPathEqualTo("/v1/reviews"))
+                .willReturn(aResponse()
+                        .withStatus(500)
+                        .withBody("Review Service is Down")));
+
+        //when
+        webTestClient
+                .get()
+                .uri("/v1/movies/{id}", movieId)
+                .exchange()
+                .expectStatus()
+                .is5xxServerError()
+                .expectBody(String.class)
+                .isEqualTo("Server Exception while calling reviews-service : Review Service is Down");
+
+        verify(4, getRequestedFor(urlPathMatching("/v1/reviews*")));
     }
 }
