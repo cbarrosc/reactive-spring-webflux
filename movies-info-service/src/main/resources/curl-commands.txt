@@ -34,6 +34,10 @@ GET-MOVIE-INFO-BY-ID
 -----------------------
 http GET http://localhost:8080/v1/movie-info/1
 
+STREAM-MOVIE-INFO
+-----------------------
+curl -i http://localhost:8080/v1/movie-info/stream
+
 GET-MOVIE-INFO-STREAM
 -----------------------
 http GET http://localhost:8080/v1/movie-info/stream

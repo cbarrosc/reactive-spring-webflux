@@ -35,6 +35,10 @@ http GET http://localhost:8081/v1/reviews movieInfoId==1
 
 http GET http://localhost:8081/v1/reviews movieInfoId==2
 
+GET-REVIEWS-STREAM
+------------------
+curl -i http://localhost:8081/v1/reviews/stream
+
 
 UPDATE-REVIEW:
 ----------------

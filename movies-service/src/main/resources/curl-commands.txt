@@ -47,3 +47,7 @@ MOVIE-SERVICE
 
 http GET http://localhost:8082/v1/movies/1
 http GET http://localhost:8082/v1/movies/2
+
+STREAM
+------
+curl -i http://localhost:8082/v1/movies/stream
